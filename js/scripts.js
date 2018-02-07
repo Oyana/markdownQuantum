@@ -21,7 +21,7 @@ render = data => {
 		+ '<meta name="viewport" content="width=device-width, initial-scale=1">'
 		+ '<link rel="profile" href="http://gmpg.org/xfn/11">'
 		+ '<title> MarkdownQuantum Document </title>');
-		$body.html( '<main id="main">'
+	$body.html( '<main id="main">'
 		+ '<header>'
 		+ '	<h1 class="title main-title">'
 		+ '		MarkdownQuantum Document...'
@@ -38,7 +38,12 @@ render = data => {
 	const title = $body.find("h1")[1];
 	if ( title != void 0 )
 	{
+		console.log(title);
 		$body.find(".main-title").html( title.innerHTML );
 		title.remove();
+		if ( title.innerText != void 0 )
+		{
+			document.title = title.innerText + " | MarkdownQuantum Document";
+		}
 	}
 }
