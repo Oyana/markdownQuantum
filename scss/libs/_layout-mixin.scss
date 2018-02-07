@@ -1,0 +1,230 @@
+@mixin exposent()
+{
+	/* normalize afte mayeur reset sub/su styles
+	* based on : https://gist.github.com/unruthless/413930
+	*/
+	font-size: 75%;
+	line-height: 0;
+	position: relative;
+	vertical-align: baseline;
+}
+@mixin block()
+{
+	position: relative;
+	display: block;
+}
+@mixin inline-block()
+{
+	position: relative;
+	display: inline-block;
+}
+@mixin absolute-block()
+{
+	position: absolute;
+	display: block;
+	float: none;
+}
+@mixin fixed-block()
+{
+	position: fixed;
+	display: block;
+	float: none;
+}
+@mixin table-block()
+{
+	position: relative;
+	display: table;
+}
+@mixin left-block()
+{
+	@include block();
+	float: left;
+}
+@mixin right-block()
+{
+	@include block();
+	float: right;
+}
+@mixin break-block()
+{
+	@include clearfix();
+}
+@mixin auto-block()
+{
+	@include block();
+	left: 0;
+	right: 0;
+	margin-left: auto;
+	margin-right: auto;
+	float: none;
+}
+@mixin auto-abs-block()
+{
+	/* hack css margin auto in absolute *, %auto-abs-block{ /* hack css margin auto in absolute */
+	@include absolute-block();
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+}
+@mixin ninja-block()
+{
+	/* NIN NIN! */
+	position: relative;
+	display: block;
+	height: 0rem;
+	width: 0rem;
+	visibility: hidden;
+	overflow: hidden;
+}
+@mixin no-repeat-bg()
+{
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+}
+@mixin full-bg()
+{
+	@include no-repeat-bg();
+	background-size: cover;
+}
+@mixin cover-bg()
+{
+	@include full-bg();
+}
+@mixin contain-bg()
+{
+	@include no-repeat-bg();
+	background-size: contain;
+}
+@mixin center-bg()
+{
+	@include no-repeat-bg();
+	background-size: auto;
+}
+@mixin full-fixed-bg()
+{
+	@include full-bg();
+	background-attachment: fixed;
+}
+@mixin container()
+{
+	@include auto-block();
+	max-width: 134rem;
+	width: 100%;
+	padding-left: 2rem;
+	padding-right: 2rem;
+	overflow: hidden;
+}
+@mixin img-responsive()
+{
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+@mixin img-full()
+{
+	width: 100%;
+	height: auto;
+}
+@mixin abstractElem()
+{
+	position: absolute;
+	display: block;
+	float: none;
+	content: '';
+}
+@mixin abstract-element()
+{
+	position: absolute;
+	display: block;
+	float: none;
+	content: '';
+}
+@mixin center()
+{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	height: 100%;
+	text-align: center;
+	>*{
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+@mixin default-transition()
+{
+	 transition: opacity 0.5s;
+}
+@mixin all-transition()
+{
+	 transition: all 1s;
+}
+@mixin keyframes($name) {
+	@-webkit-keyframes #{$name} {
+	@content;
+	}
+	@-moz-keyframes #{$name} {
+	@content;
+	}
+	@-ms-keyframes #{$name} {
+	@content;
+	}
+	@keyframes #{$name} {
+	@content;
+	}
+}
+@include keyframes(no-anim) {
+
+}
+
+@mixin animation ( $name, $duration ) {
+	@include animation-name( $name );
+	@include animation-duration( $duration );
+}
+@include keyframes( fade ) {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@include keyframes( width-loading ) {
+	0% {
+		width: 0%;
+	}
+	100% {
+		width: 100%;
+	}
+}
+@include keyframes( height-loading ) {
+	0% {
+		height: 0%;
+	}
+	100% {
+		height: 100%;
+	}
+}
+@mixin clearfix()
+{
+	clear: both;
+	content: "";
+	display: table;
+}
+#main:after{
+	display: none;
+	visibility: hidden;
+	color: green;
+	position: absolute;
+	bottom: 0rem;
+	left: 0rem;
+	right: 0rem;
+	margin: auto;
+	font-size: 2rem;
+	width: 30rem;
+	font-family: "dashicons";
+	content: "Made with 🦄 by \40Golgarud\00a0";
+}

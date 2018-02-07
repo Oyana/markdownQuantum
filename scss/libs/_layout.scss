@@ -1,0 +1,109 @@
+*{
+	box-sizing: border-box;
+}
+html{
+	font-family: $mainFont;
+	overflow-x: hidden;
+	height: 100%;
+	width: 100%;
+	font-size: $remInit; /* INIT REM DON'T TOUCH! if you want to change font size do it in body tag plz */
+}
+body{
+	height: auto;
+	width: 100%;
+	font-size: $font-size;
+}
+%exposent {
+	@include exposent();
+}
+sup, %sup {
+	@extend %exposent;
+	top: -0.5em;
+}
+sub, %sub {
+	@extend %exposent;
+	bottom: -0.25em;
+}
+i, %i, %italic{
+	font-style: italic;
+}
+b, strong{
+	font-weight: bold;
+}
+u{
+	text-decoration: underline;
+}
+a, %link, %a{
+	text-decoration: none;
+	&:hover{
+		text-decoration: none;
+	}
+}
+a:not([class^='btn']){
+	font-size:1.5rem;
+	font-family:$mainFont;
+	&:hover{
+		text-decoration:underline;
+	}
+	&:visited{
+		text-decoration:underline;
+	}
+	&:active{
+		text-decoration:underline;
+	}
+	&:focus{
+		text-decoration:underline;
+	}
+}
+.both, .clear, .clearboth, %both, %clear, %clearboth{
+	@include clearfix();
+}
+#page, #main, %page{
+	@include auto-block();
+	width: 100%;
+	max-width: 90rem;
+	min-width: 32rem;
+
+	overflow: hidden;
+}
+%title{
+	font-family: $titleFont;
+}
+h1, h2, h3, h4, h5, h6, .title{
+	@extend %title;
+}
+%btn{
+	@include block();
+	font-family: $titleFont;
+}
+.btn, button, input[type="submit"]{
+	@extend %btn;
+}
+img, %img, %image{
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+%input{
+	width: auto;
+	max-width: 100%;
+}
+input[type="text"],
+input[type="email"],
+input[type="url"],
+input[type="password"],
+input[type="search"],
+input[type="number"],
+input[type="tel"],
+input[type="range"],
+input[type="date"],
+input[type="month"],
+input[type="week"],
+input[type="time"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="color"],
+textarea {
+	@extend %input;
+}
