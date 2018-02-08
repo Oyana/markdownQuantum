@@ -1,6 +1,9 @@
-var gettingAllTabs = browser.tabs.query({});
-var alreadyRender = [];
-var currentSettings = '';
+// Encoding: UTF-8
+// Released under MIT license
+// Copyright (c) 2018 Golga
+
+let gettingAllTabs = browser.tabs.query({});
+let currentSettings = '';
 // When first loaded, initialize the page action for all tabs.
 gettingAllTabs.then((tabs) => {
 	for ( let tab of tabs ) {
@@ -15,11 +18,12 @@ browser.tabs.onUpdated.addListener( (id, changeInfo, tab) => {
 });
 
 refreshSetting = () => {
-	var getdata = browser.storage.sync.get();
+	let getdata = browser.storage.sync.get();
 	getdata.then( ( res ) => {
 		currentSettings = res;
-		gettingAllTabs.then((tabs) => {
-			for (let tab of tabs) {
+		gettingAllTabs.then( (tabs) => {
+			for (let tab of tabs)
+			{
 				renderMD(tab);
 			}
 		});

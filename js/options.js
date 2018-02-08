@@ -1,3 +1,7 @@
+// Encoding: UTF-8
+// Released under MIT license
+// Copyright (c) 2018 Golga
+
 // store settings from option page (retrived from input value).
 saveOptions = e =>{
 	browser.storage.sync.set({
@@ -8,7 +12,7 @@ saveOptions = e =>{
 
 // Load option value into settings form.
 restoreOptions = () => {
-	var getdata = browser.storage.sync.get();
+	let getdata = browser.storage.sync.get();
 	getdata.then( (res) => {
 		aplyValue( ".o_custom_css", res.o_custom_css, "body{}" );
 	} );

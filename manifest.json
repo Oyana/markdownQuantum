@@ -45,8 +45,8 @@
 		{
 			"all_frames": false,
 			"js": [
+				"js/_function.js",
 				"js/_markdown.js",
-				"js/_furigana.js",
 				"js/scripts.js"
 			],
 			"css": [

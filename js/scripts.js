@@ -1,3 +1,7 @@
+// Encoding: UTF-8
+// Released under MIT license
+// Copyright (c) 2018 Golga
+
 main = () => {
 	const curentUrl = window.location.href;
 	if ( curentUrl.indexOf("file://") === -1 )
@@ -12,9 +16,30 @@ main = () => {
 }
 
 render = data => {
-	let body = document.body;
 	data = furiganaIt( markdown.toHTML( data, "Maruku" ) );
+	renderHead( data );
+	renderBody( data );
+}
 
+renderHead = data => {
+	const head = document.head;
+
+	const metaCharSet = document.createElement('meta');
+	metaCharSet.charset = 'UTF-8';
+	metaCharSet.attributeName = 'charset';
+	document.defaultCharset = 'UTF-8';
+
+	const metaViewPort = document.createElement('meta');
+	metaViewPort.name = 'viewport';
+	metaViewPort.content = 'width=device-width, initial-scale=1';
+
+	document.title = "MarkdownQuantum Document";
+	head.appendChild( metaCharSet );
+	head.appendChild( metaViewPort );
+}
+
+renderBody = data => {
+	const body = document.body;
 	body.innerHTML = '<main id="main">'
 		+ '<header>'
 		+ '	<h1 class="title main-title">'
@@ -26,35 +51,6 @@ render = data => {
 		+ data
 		+ '	</div>'
 		+ '	</div>';
-	console.log( data );
-
 }
-
-load = ( url, callBack ) => {
-	let xmlhttp = new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function()
-	{
-		if ( xmlhttp.readyState === XMLHttpRequest.DONE )
-		{
-			if ( xmlhttp.status === 200 )
-			{
-				// console.log( xmlhttp.responseText );
-				callBack( xmlhttp.responseText );
-				// document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
-			}
-			else if ( xmlhttp.status === 400 )
-			{
-				alert( 'There was an error 400' );
-			}
-			else
-			{
-				alert( 'something else other than 200 was returned' );
-			}
-		}
-	}
-	xmlhttp.open("GET", url, true);
-	xmlhttp.send();
-}
-
 
 main();
