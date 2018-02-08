@@ -1,27 +1,21 @@
-$(function(){
+main = () => {
 	const curentUrl = window.location.href;
-
 	if ( curentUrl.indexOf("file://") === -1 )
 	{
 		/*Ajax hack to pache encoding without bom*/
-		$.get( curentUrl, render );
+		load( curentUrl, render );
 	}
 	else
 	{
-		render(  $("body pre").html() );
+		render( document.getElementsByTagName("pre")[0].innerHTML );
 	}
-});
+}
 
 render = data => {
-	const $head = $("head");
-	const $body = $("body");
+	let body = document.body;
 	data = furiganaIt( markdown.toHTML( data, "Maruku" ) );
 
-	$head.html('<meta charset="UTF-8">'
-		+ '<meta name="viewport" content="width=device-width, initial-scale=1">'
-		+ '<link rel="profile" href="http://gmpg.org/xfn/11">'
-		+ '<title> MarkdownQuantum Document </title>');
-	$body.html( '<main id="main">'
+	body.innerHTML = '<main id="main">'
 		+ '<header>'
 		+ '	<h1 class="title main-title">'
 		+ '		MarkdownQuantum Document...'
@@ -31,19 +25,36 @@ render = data => {
 		+ '<div class="chapter">'
 		+ data
 		+ '	</div>'
-		+ '	</div>'
-	);
+		+ '	</div>';
+	console.log( data );
 
-	/*Set main title in fixed header*/
-	const title = $body.find("h1")[1];
-	if ( title != void 0 )
+}
+
+load = ( url, callBack ) => {
+	let xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function()
 	{
-		console.log(title);
-		$body.find(".main-title").html( title.innerHTML );
-		title.remove();
-		if ( title.innerText != void 0 )
+		if ( xmlhttp.readyState === XMLHttpRequest.DONE )
 		{
-			document.title = title.innerText + " | MarkdownQuantum Document";
+			if ( xmlhttp.status === 200 )
+			{
+				// console.log( xmlhttp.responseText );
+				callBack( xmlhttp.responseText );
+				// document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+			}
+			else if ( xmlhttp.status === 400 )
+			{
+				alert( 'There was an error 400' );
+			}
+			else
+			{
+				alert( 'something else other than 200 was returned' );
+			}
 		}
 	}
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
 }
+
+
+main();
