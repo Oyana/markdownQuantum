@@ -4,17 +4,18 @@
 
 main = () => {
 	const curentUrl = window.location.href;
-	if ( curentUrl.indexOf("file://") === -1 )
+	console.log( curentUrl.indexOf("file://") );
+	if ( !inBlackList( curentUrl ) )
 	{
 		/*Ajax hack to pache encoding without bom*/
-		console.log( document.charset );
 		load( curentUrl, render );
 	}
-	else
+	else if ( curentUrl.indexOf("file://") !== -1 )
 	{
-		console.log( document.charset );
+		console.log( "local file" );
 		render( document.getElementsByTagName("pre")[0].innerHTML );
 	}
+	console.log( document.charset );
 }
 
 render = data => {
@@ -67,4 +68,24 @@ renderTitle = () => {
 		}
 	}
 }
+
+inBlackList = url => {
+	let inBlackList = false;
+	const blackList = [
+		"github.com",
+		"bitbucket.org",
+		"gitlab.com",
+		"file://"
+	];
+
+	blackList.forEach( ( element ) => {
+		if ( url.indexOf( element ) !== -1 )
+		{
+			inBlackList = true;
+			return;
+		}
+	});
+	return inBlackList;
+}
+
 main();
