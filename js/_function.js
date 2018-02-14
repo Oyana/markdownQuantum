@@ -7,11 +7,11 @@ furiganaIt = text => {
 	const kanjiRegex = /(?:\{|\｛)([^\}\｝]+)(?:\}|\｝)(?:\（|\()([^\}\｝]+)(?:\）|\))/g;
 
 	let match;
-	while (match = patternRegex.exec(text))
+	while ( match = patternRegex.exec( text ) )
 	{
 		const html = ["<ruby>"];
 		const phrase = match[0];
-		while (secondMatch = kanjiRegex.exec(phrase))
+		while ( secondMatch = kanjiRegex.exec( phrase ) )
 		{
 			const kanji = secondMatch[1];
 			const reading = secondMatch[2];
@@ -21,7 +21,7 @@ furiganaIt = text => {
 			html.push("</rt>");
 		}
 		html.push("</ruby>");
-		text = match.input.replace(phrase, html.join(""));
+		text = match.input.replace( phrase, html.join("") );
 	}
 	return text;
 }
@@ -35,7 +35,6 @@ load = ( url, callBack ) => {
 			if ( xmlhttp.status === 200 )
 			{
 				callBack( xmlhttp.responseText );
-				// document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
 			}
 			else if ( xmlhttp.status === 400 )
 			{
@@ -47,6 +46,6 @@ load = ( url, callBack ) => {
 			}
 		}
 	}
-	xmlhttp.open("GET", url, true);
+	xmlhttp.open( "GET", url, true );
 	xmlhttp.send();
 }

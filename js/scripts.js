@@ -7,10 +7,12 @@ main = () => {
 	if ( curentUrl.indexOf("file://") === -1 )
 	{
 		/*Ajax hack to pache encoding without bom*/
+		console.log( document.charset );
 		load( curentUrl, render );
 	}
 	else
 	{
+		console.log( document.charset );
 		render( document.getElementsByTagName("pre")[0].innerHTML );
 	}
 }
@@ -19,6 +21,7 @@ render = data => {
 	data = furiganaIt( markdown.toHTML( data, "Maruku" ) );
 	renderHead( data );
 	renderBody( data );
+	renderTitle();
 }
 
 renderHead = data => {
@@ -27,7 +30,6 @@ renderHead = data => {
 	const metaCharSet = document.createElement('meta');
 	metaCharSet.charset = 'UTF-8';
 	metaCharSet.attributeName = 'charset';
-	document.defaultCharset = 'UTF-8';
 
 	const metaViewPort = document.createElement('meta');
 	metaViewPort.name = 'viewport';
@@ -53,4 +55,16 @@ renderBody = data => {
 		+ '	</div>';
 }
 
+renderTitle = () => {
+	const title = document.getElementsByTagName("h1")[1];
+	if ( title !== void 0 )
+	{
+		title.remove();
+		document.getElementsByTagName("h1")[0].innerHTML = title.innerHTML;
+		if ( title.innerText !== void 0 && title.innerText )
+		{
+			document.title = title.innerText + " | MarkdownQuantum Document";
+		}
+	}
+}
 main();
