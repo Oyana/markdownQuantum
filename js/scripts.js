@@ -1,27 +1,49 @@
-$(function(){
-	const curentUrl = window.location.href;
+// Encoding: UTF-8
+// Released under MIT license
+// Copyright (c) 2018 Golga
 
-	if ( curentUrl.indexOf("file://") === -1 )
+main = () => {
+	const curentUrl = window.location.href;
+	console.log( curentUrl.indexOf("file://") );
+	if ( !inBlackList( curentUrl ) )
 	{
 		/*Ajax hack to pache encoding without bom*/
-		$.get( curentUrl, render );
+		load( curentUrl, render );
 	}
-	else
+	else if ( curentUrl.indexOf("file://") !== -1 )
 	{
-		render(  $("body pre").html() );
+		console.log( "local file" );
+		render( document.getElementsByTagName("pre")[0].innerHTML );
 	}
-});
+	console.log( document.charset );
+}
 
 render = data => {
-	const $head = $("head");
-	const $body = $("body");
 	data = furiganaIt( markdown.toHTML( data, "Maruku" ) );
+	renderHead( data );
+	renderBody( data );
+	renderTitle();
+}
 
-	$head.html('<meta charset="UTF-8">'
-		+ '<meta name="viewport" content="width=device-width, initial-scale=1">'
-		+ '<link rel="profile" href="http://gmpg.org/xfn/11">'
-		+ '<title> MarkdownQuantum Document </title>');
-	$body.html( '<main id="main">'
+renderHead = data => {
+	const head = document.head;
+
+	const metaCharSet = document.createElement('meta');
+	metaCharSet.charset = 'UTF-8';
+	metaCharSet.attributeName = 'charset';
+
+	const metaViewPort = document.createElement('meta');
+	metaViewPort.name = 'viewport';
+	metaViewPort.content = 'width=device-width, initial-scale=1';
+
+	document.title = "MarkdownQuantum Document";
+	head.appendChild( metaCharSet );
+	head.appendChild( metaViewPort );
+}
+
+renderBody = data => {
+	const body = document.body;
+	body.innerHTML = '<main id="main">'
 		+ '<header>'
 		+ '	<h1 class="title main-title">'
 		+ '		MarkdownQuantum Document...'
@@ -31,19 +53,39 @@ render = data => {
 		+ '<div class="chapter">'
 		+ data
 		+ '	</div>'
-		+ '	</div>'
-	);
+		+ '	</div>';
+}
 
-	/*Set main title in fixed header*/
-	const title = $body.find("h1")[1];
-	if ( title != void 0 )
+renderTitle = () => {
+	const title = document.getElementsByTagName("h1")[1];
+	if ( title !== void 0 )
 	{
-		console.log(title);
-		$body.find(".main-title").html( title.innerHTML );
 		title.remove();
-		if ( title.innerText != void 0 )
+		document.getElementsByTagName("h1")[0].innerHTML = title.innerHTML;
+		if ( title.innerText !== void 0 && title.innerText )
 		{
 			document.title = title.innerText + " | MarkdownQuantum Document";
 		}
 	}
 }
+
+inBlackList = url => {
+	let inBlackList = false;
+	const blackList = [
+		"github.com",
+		"bitbucket.org",
+		"gitlab.com",
+		"file://"
+	];
+
+	blackList.forEach( ( element ) => {
+		if ( url.indexOf( element ) !== -1 )
+		{
+			inBlackList = true;
+			return;
+		}
+	});
+	return inBlackList;
+}
+
+main();
