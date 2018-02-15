@@ -4,7 +4,6 @@
 
 main = () => {
 	const curentUrl = window.location.href;
-	console.log( curentUrl.indexOf("file://") );
 	if ( !inBlackList( curentUrl ) )
 	{
 		/*Ajax hack to pache encoding without bom*/
@@ -12,10 +11,12 @@ main = () => {
 	}
 	else if ( curentUrl.indexOf("file://") !== -1 )
 	{
-		console.log( "local file" );
 		render( document.getElementsByTagName("pre")[0].innerHTML );
+		if ( document.charset.indexOf( "utf" ) === -1 )
+		{
+			renderCharsetInfo();
+		}
 	}
-	console.log( document.charset );
 }
 
 render = data => {
@@ -86,6 +87,14 @@ inBlackList = url => {
 		}
 	});
 	return inBlackList;
+}
+
+renderCharsetInfo = () => {
+	const title = document.getElementsByTagName("h1")[0];
+	if ( title !== void 0 )
+	{
+		title.innerHTML = title.innerHTML + " <span>⚠ You are curently watching a local file encoded without BOM. <br /> You may have encoding issues.</span>";
+	}
 }
 
 main();
