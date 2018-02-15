@@ -10,7 +10,7 @@
 	},
 	"description": "Firefox Quantum render all markdown file/url with a dark theme.\n\r ",
 	"homepage_url": "https://github.com/Oyana/markdownQuantum",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"browser_action": {
 		"default_icon": "img/ico/icon-128.png",
 		"default_title": "markdownQuantumSettings"
